@@ -157,8 +157,30 @@ window.onload = function() {
     var object = new Initial();
     
     var id = setInterval(execute, 10);
+    var locations = [ 863 ];
+    var flames = [document.getElementById("flame1")];
     
-    var tasks = [ new Initial(), new GoTo(863), new DropDown(document.getElementById("flame1")), new RiseUp(), new GoTo(fromLeftInitial), new Final()];
+    locations.push(800);
+    flames.push(document.getElementById("flame2"));
+    function makeTasks(day) {
+        var tasks = [];
+        tasks.push(new Initial());
+        for (i=0; i<day; i++) {
+            var j = day - i;
+            j = j-1;
+            tasks.push(new GoTo(locations[j]));
+            tasks.push(new DropDown(flames[j]));
+            tasks.push(new RiseUp());
+            
+        }
+        tasks.push(new GoTo(fromLeftInitial));
+        tasks.push(new Final());
+        return tasks;
+    }
+    
+    //var tasks = [ new Initial(), new GoTo(863), new DropDown(document.getElementById("flame1")), new RiseUp(), new GoTo(fromLeftInitial), new Final()];
+    
+    var tasks = makeTasks(2);
     
     var pointer = 0;
     var currentName = "none";
