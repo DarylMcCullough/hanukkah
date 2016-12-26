@@ -21,10 +21,10 @@
 #flame0 { position:absolute; top:-45px; left:-7px; }
 #flameProper { position:relative; top:-10px; left:-0x; z-index: 5;}
 
-#raise { position:absolute; top: 20px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%}
-#lower { position:absolute; top: 70px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%}
-#rotate { position:absolute; top: 120px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%}
+#raise { position:absolute; top: 20px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}
+#lower { position:absolute; top: 70px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}
+#rotate { position:absolute; top: 120px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}
 
-#left { position:absolute; top: 45px; left: 100px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%}
+#left { position:absolute; top: 45px; left: 100px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}
 
-#right { position:absolute; top: 70px; left: 300px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%}
+#right { position:absolute; top: 70px; left: 300px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}

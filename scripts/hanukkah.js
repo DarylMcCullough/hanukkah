@@ -62,6 +62,7 @@ function goLeft(amt) {
 }
 
 function Initial() {
+    this.name = "initial";
     this.index = 0;
     this.oldJ = 0;
     this.maxIndex = 121;
@@ -82,13 +83,14 @@ function Initial() {
 }
 
 function GoTo(leftIndex) {
+    this.name = "GoTo";
     this.leftIndex = leftIndex;
     this.doit = function() {
-        if (fromLeft > this.leftIndex) {
+        if (fromLeft < this.leftIndex) {
             goRight();
             return true;
         }
-        if (fromLeft < this.leftIndex) {
+        if (fromLeft > this.leftIndex) {
             goLeft();
             return true;
         }
@@ -97,6 +99,7 @@ function GoTo(leftIndex) {
 }
 
 function DropDown(flameObject) {
+    this.name = "DropDown";
     this.index = 0;
     this.maxIndex = 15;
     this.doit = function() {
@@ -110,7 +113,8 @@ function DropDown(flameObject) {
     }
 }
 
-function RiseUp(flameObject) {
+function RiseUp() {
+    this.name = "RiseUp";
     this.index = 0;
     this.maxIndex = 15;
     this.doit = function() {
@@ -124,12 +128,13 @@ function RiseUp(flameObject) {
 }
 
 function Final() {
+    this.name = "Final";
     this.index = 0;
     this.oldJ = 0;
     this.maxIndex = 121;
     this.maxHeight = 60;
     this.doit = function() {
-        initial.index++;
+        this.index++;
         unrotate();
         if (this.index > this.maxIndex) {
             return false;
@@ -148,18 +153,32 @@ window.onload = function() {
     var oldJ = 0;
     var newJ = 1;
     var i = 0;
-    var id = setInterval(doIt, 10);
-    //var object = new Initial();
+    //var id = setInterval(doIt, 10);
+    var object = new Initial();
     
-    //var id = setInterval(execute, 10);
-        
-    //function execute() {
-    //    result = object.doit();
-    //    if (result == false) {
-    //        clearInterval(id);
-    //        return;
-    //    }
-    //}
+    var id = setInterval(execute, 10);
+    
+    var tasks = [ new Initial(), new GoTo(863), new DropDown(document.getElementById("flame1")), new RiseUp(), new GoTo(fromLeftInitial), new Final()];
+    
+    var pointer = 0;
+    var currentName = "none";
+    
+    function execute() {
+        if (pointer >= tasks.length) {
+            clearInterval(id);
+            return;
+        }
+        var object = tasks[pointer];
+        if (currentName != object.name) {
+            currentName = object.name;
+        }
+        currentName = object.name;
+        result = object.doit();
+        if (result == false) {
+            pointer++;
+            return;
+        }
+    }
     
     //var id = setInterval(execute, 10);
     
