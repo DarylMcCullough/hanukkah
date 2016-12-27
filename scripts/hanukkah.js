@@ -2,23 +2,18 @@ var fromTop = 132;
 var fromLeft = 708;
 var fromTopInitial = 132;
 var fromLeftInitial = 708;
-var day = 3;
+var day = 4;
 
 var deg = 0;
 var id = -1;
 var flag = true;
 
-function advanceDay() {
-    if (flag == false) {
-        return;
-    }
-        
+function advanceDay() {        
     if (day == 8) {
         day = 1;
     }
     day += 1;
     document.getElementById("day").textContent = "Day " + day;
-    document.getElementById("clickMsg").style.color = "#253572";
     doLighting();
 }
 
@@ -85,7 +80,7 @@ function Initial() {
     this.maxIndex = 121;
     this.maxHeight = 60;
     this.doit = function() {
-        document.getElementById("clickMsg").style.zindex = -1;
+        //document.getElementById("clickMsg").style.zindex = -1;
         this.index++;
         rotate();
         if (this.index > this.maxIndex) {
@@ -155,7 +150,7 @@ function Final() {
         this.index++;
         unrotate();
         if (this.index > this.maxIndex) {
-            document.getElementById("clickMsg").style.zindex = -1;
+            //document.getElementById("clickMsg").style.zindex = -1;
             return false;
         }
         var newJ = Math.floor(1.0 * this.index * this.maxHeight/this.maxIndex);
@@ -205,11 +200,14 @@ function initialize() {
     
     var element = document.getElementById("wholeCandle");
     
-    element.style.left = fromLeftInitial;
+    element.style.left = fromLeftInitial + "px";
 
     fromLeft = fromLeftInitial;
     element.style.top = fromTopInitial;
     fromTop = fromTopInitial;
+    
+    element.style.top = fromTop + "px";
+    
     for (var i = 0; i< flames.length; i++) {
         flames[i].style.zIndex = -1;
     }
@@ -225,7 +223,7 @@ function initialize() {
 
     
 function doLighting() {
-    document.getElementById("clickMsg").style.color = "#253572";
+    //document.getElementById("clickMsg").style.color = "#253572";
     
     flag = false;
     initialize();
@@ -251,18 +249,28 @@ function doLighting() {
         return tasks;
     }
     
+    var day1 = day;
     
-    tasks = makeTasks(day);
+    
+    tasks = makeTasks(day1);
     
     var pointer = 0;
     var currentName = "none";
     
     function execute() {
+        if (day1 != day) {
+            clearInterval(id);
+            tasks = [];
+            pointer = 0;
+            currentName = "none";
+            initialize();
+            return;
+        }
 
         if (pointer >= tasks.length) {
             clearInterval(id);
-            flag = true;
-            document.getElementById("clickMsg").style.color = "white";
+            //flag = true;
+            //document.getElementById("clickMsg").style.color = "white";
             return;
         }
         var object = tasks[pointer];
