@@ -2,7 +2,7 @@ var fromTop = 132;
 var fromLeft = 708;
 var fromTopInitial = 132;
 var fromLeftInitial = 708;
-var day = 1;
+var day = 3;
 
 var deg = 0;
 var id = -1;
@@ -198,16 +198,13 @@ window.onload = doLighting;
 //window.onload = foo;
 
 function initialize() {
+    document.getElementById("day").textContent = "Day " + day;
     if (id > 0) {
         clearInterval(id);
     }
     
-    document.getElementById("clickMsg").style.zindex = -1;
-
     var element = document.getElementById("wholeCandle");
     
-    element.style.zindex = -1;
-
     element.style.left = fromLeftInitial;
 
     fromLeft = fromLeftInitial;
@@ -229,6 +226,7 @@ function initialize() {
     
 function doLighting() {
     document.getElementById("clickMsg").style.color = "#253572";
+    
     flag = false;
     initialize();
     
