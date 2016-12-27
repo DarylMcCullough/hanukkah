@@ -6,16 +6,23 @@ var day = 4;
 
 var deg = 0;
 var id = -1;
-var flag = true;
+var timeoutId = -1;
 
-function advanceDay() {        
-    if (day == 8) {
-        day = 1;
+function advanceDay() {
+    if (timeoutId > 0) {
+        clearTimeout(timeoutId);
     }
-    day += 1;
-    document.getElementById("day").textContent = "Day " + day;
-    doLighting();
+    if (day == 8) {
+        newDay = 1;
+    } else {
+        newDay = day + 1;
+    }
+    document.getElementById("day").textContent = "Day " + newDay;
+    day = newDay;
+    initialize();
+    timeoutId = setTimeout(doLighting, 500);
 }
+
 
 function raise() {
     fromTop--;
@@ -223,9 +230,7 @@ function initialize() {
 
     
 function doLighting() {
-    //document.getElementById("clickMsg").style.color = "#253572";
-    
-    flag = false;
+
     initialize();
     
     var oldJ = 0;
@@ -258,19 +263,10 @@ function doLighting() {
     var currentName = "none";
     
     function execute() {
-        if (day1 != day) {
-            clearInterval(id);
-            tasks = [];
-            pointer = 0;
-            currentName = "none";
-            initialize();
-            return;
-        }
 
         if (pointer >= tasks.length) {
             clearInterval(id);
-            //flag = true;
-            //document.getElementById("clickMsg").style.color = "white";
+            timeoutId = setTimeout(doLighting, 500);
             return;
         }
         var object = tasks[pointer];
