@@ -2,8 +2,18 @@ var fromTop = 132;
 var fromLeft = 708;
 var fromTopInitial = 132;
 var fromLeftInitial = 708;
+var day = 1;
 
 var deg = 0;
+
+function advanceDay() {
+    if (day == 8) {
+        day = 1;
+    }
+    day += 1;
+    document.getElementById("day").textContent = "Day " + day;
+    doLighting();
+}
 
 function raise() {
     fromTop--;
@@ -149,7 +159,10 @@ function Final() {
 }
 
 
-window.onload = function() {
+window.onload = doLighting;
+
+    
+function doLighting() {
     var oldJ = 0;
     var newJ = 1;
     var i = 0;
@@ -157,11 +170,34 @@ window.onload = function() {
     var object = new Initial();
     
     var id = setInterval(execute, 10);
-    var locations = [ 863 ];
+    var locations = [ 870 ];
     var flames = [document.getElementById("flame1")];
     
-    locations.push(800);
+    locations.push(825);
     flames.push(document.getElementById("flame2"));
+    
+    locations.push(778);
+    flames.push(document.getElementById("flame3"));
+    
+    locations.push(735);
+    flames.push(document.getElementById("flame4"));
+
+    locations.push(648);
+    flames.push(document.getElementById("flame5"));
+    
+    locations.push(604);
+    flames.push(document.getElementById("flame6"));
+    
+    locations.push(558);
+    flames.push(document.getElementById("flame7"));
+    
+    locations.push(514);
+    flames.push(document.getElementById("flame8"));
+    
+    for (var i = 0; i< flames.length; i++) {
+        flames[i].style.zIndex = -1;
+    }
+    
     function makeTasks(day) {
         var tasks = [];
         tasks.push(new Initial());
@@ -171,6 +207,7 @@ window.onload = function() {
             tasks.push(new GoTo(locations[j]));
             tasks.push(new DropDown(flames[j]));
             tasks.push(new RiseUp());
+            flames[j].style.zindex = 1;
             
         }
         tasks.push(new GoTo(fromLeftInitial));
@@ -178,9 +215,8 @@ window.onload = function() {
         return tasks;
     }
     
-    //var tasks = [ new Initial(), new GoTo(863), new DropDown(document.getElementById("flame1")), new RiseUp(), new GoTo(fromLeftInitial), new Final()];
     
-    var tasks = makeTasks(2);
+    var tasks = makeTasks(day);
     
     var pointer = 0;
     var currentName = "none";
@@ -199,81 +235,6 @@ window.onload = function() {
         if (result == false) {
             pointer++;
             return;
-        }
-    }
-    
-    //var id = setInterval(execute, 10);
-    
-    
-    function doIt() {
-        i++;
-        rotate();
-        newJ = Math.floor(i*60.0/121.0);
-        if (newJ > oldJ) {
-            oldJ = newJ;
-            raise();
-        }
-        if (i > 121) {
-            clearInterval(id);
-            i = 0;
-            id = setInterval(doit2, 10);
-        }
-    }
-    
-    function doit2() {
-        i++;
-        goRight();
-        if (i > 155) {
-            clearInterval(id);
-            i = 0;
-            id = setInterval(doit3, 10);
-        }
-    }
-    
-    function doit3() {
-        i++;
-        lower();
-        if (i > 15) {
-            document.getElementById("flame1").style.zIndex = 2;
-            clearInterval(id);
-            i = 0;
-            id = setInterval(doit4, 10);
-        }
-    }
-    
-    function doit4() {
-        i++;
-        raise();
-        if (i > 15) {
-            clearInterval(id);
-            i = 0;
-            id = setInterval(doit5, 10);
-        }
-    }
-    
-    function doit5() {
-        i++;
-        goLeft();
-        if (i > 155) {
-            clearInterval(id);
-            i = 0;
-            oldJ = 0;
-            id = setInterval(doit6, 10);
-        }
-    }
-    
-    function doit6() {
-        i++;
-        unrotate();
-        newJ = Math.floor(i*60.0/121.0);
-
-        if (newJ > oldJ) {
-            oldJ = newJ;
-            lower();
-        }
-        if (i > 121) {
-            clearInterval(id);
-            i = 0;
         }
     }
     
