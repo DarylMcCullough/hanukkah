@@ -5,13 +5,20 @@ var fromLeftInitial = 708;
 var day = 1;
 
 var deg = 0;
+var id = -1;
+var flag = true;
 
 function advanceDay() {
+    if (flag == false) {
+        return;
+    }
+        
     if (day == 8) {
         day = 1;
     }
     day += 1;
     document.getElementById("day").textContent = "Day " + day;
+    document.getElementById("clickMsg").style.color = "#253572";
     doLighting();
 }
 
@@ -78,6 +85,7 @@ function Initial() {
     this.maxIndex = 121;
     this.maxHeight = 60;
     this.doit = function() {
+        document.getElementById("clickMsg").style.zindex = -1;
         this.index++;
         rotate();
         if (this.index > this.maxIndex) {
@@ -147,6 +155,7 @@ function Final() {
         this.index++;
         unrotate();
         if (this.index > this.maxIndex) {
+            document.getElementById("clickMsg").style.zindex = -1;
             return false;
         }
         var newJ = Math.floor(1.0 * this.index * this.maxHeight/this.maxIndex);
@@ -158,19 +167,7 @@ function Final() {
     };
 }
 
-
-window.onload = doLighting;
-
-    
-function doLighting() {
-    var oldJ = 0;
-    var newJ = 1;
-    var i = 0;
-    //var id = setInterval(doIt, 10);
-    var object = new Initial();
-    
-    var id = setInterval(execute, 10);
-    var locations = [ 870 ];
+var locations = [ 870 ];
     var flames = [document.getElementById("flame1")];
     
     locations.push(825);
@@ -193,10 +190,51 @@ function doLighting() {
     
     locations.push(514);
     flames.push(document.getElementById("flame8"));
+
+var tasks = [];
+
+
+window.onload = doLighting;
+//window.onload = foo;
+
+function initialize() {
+    if (id > 0) {
+        clearInterval(id);
+    }
     
+    document.getElementById("clickMsg").style.zindex = -1;
+
+    var element = document.getElementById("wholeCandle");
+    
+    element.style.zindex = -1;
+
+    element.style.left = fromLeftInitial;
+
+    fromLeft = fromLeftInitial;
+    element.style.top = fromTopInitial;
+    fromTop = fromTopInitial;
     for (var i = 0; i< flames.length; i++) {
         flames[i].style.zIndex = -1;
     }
+
+        
+    for (; deg > 0;) {        
+        unrotate();
+    }
+
+    element.zindex = 3;
+    tasks = [];
+}
+
+    
+function doLighting() {
+    document.getElementById("clickMsg").style.color = "#253572";
+    flag = false;
+    initialize();
+    
+    var oldJ = 0;
+    var newJ = 1;
+    var i = 0;
     
     function makeTasks(day) {
         var tasks = [];
@@ -216,20 +254,24 @@ function doLighting() {
     }
     
     
-    var tasks = makeTasks(day);
+    tasks = makeTasks(day);
     
     var pointer = 0;
     var currentName = "none";
     
     function execute() {
+
         if (pointer >= tasks.length) {
             clearInterval(id);
+            flag = true;
+            document.getElementById("clickMsg").style.color = "white";
             return;
         }
         var object = tasks[pointer];
         if (currentName != object.name) {
             currentName = object.name;
         }
+
         currentName = object.name;
         result = object.doit();
         if (result == false) {
@@ -237,5 +279,8 @@ function doLighting() {
             return;
         }
     }
+    
+        
+    id = setInterval(execute, 10);
     
 };
