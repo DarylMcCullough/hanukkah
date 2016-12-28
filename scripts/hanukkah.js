@@ -1,19 +1,82 @@
+Date.prototype.addDays = function(days)
+{
+    var dat = new Date(this.valueOf());
+    dat.setDate(dat.getDate() + days);
+    return dat;
+}
+
+
 var fromTop = 132;
 var fromLeft = 708;
 var fromTopInitial = 132;
 var fromLeftInitial = 708;
-var day = 5;
+var day = 1;
 
 var deg = 0;
 var id = -1;
 var timeoutId = -1;
 
-var year = 2016;
-var month = "December";
-var dayOfMonth = 28;
+var year = 2015;
+var month = "November";
+var dayOfMonth = 12;
+var daysInHanukkah = 8;
+
+function setup() {
+    var date = new Date();
+    year = date.getFullYear();
+    var yearIndex = getYearIndex();
+    var startHanukkah = hanukkahDates[yearIndex];
+    day = 1;
+    for (var i=1; i<=daysInHanukkah; i++) {
+        var date1 = startHanukkah.addDays(i-1);
+                
+        if (date1.getMonth() != date.getMonth()) {
+            continue;
+        }
+        if (date1.getFullYear() != date.getFullYear()) {
+            continue;
+        }
+        if (date1.getDate() != date.getDate()) {
+            continue;
+        }
+        day = i;
+        break;
+    }
+    if (day == 1) {
+        date = startHanukkah;
+    }
+    var mnth = date.getMonth();
+    month = months[mnth];
+    dayOfMonth = date.getDate();
+    year = date.getFullYear();
+}
+
+year = new Date().getFullYear();
+var i = new Date().getMonth();
 
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
+function makeDate(day, month, year) {
+    var monthIndex = -1;
+    for (var i=0; i<months.length; i++) {
+        if (month == months[i]) {
+            monthIndex = i;
+            break;
+        }
+    }
+    return new Date(year, monthIndex, day);
+}
+
+hanukkahDates = [
+    makeDate(27, "November", 2013),
+    makeDate(16, "December", 2014),
+    makeDate(6, "December", 2015),
+    makeDate(24, "December", 2016),
+    makeDate(12, "December", 2017),
+    makeDate(2, "December", 2018),
+    makeDate(22, "December", 2019),
+    makeDate(10, "December", 2020)        
+]
 
 function setDate() {
     document.getElementById("year").textContent = year;
@@ -41,6 +104,45 @@ function advanceDay() {
     } else {
         day = day + 1;
     }
+    
+    var dateIndex = getYearIndex();
+    var date = hanukkahDates[dateIndex];
+    date = date.addDays(day-1);
+
+    var monthIndex = date.getMonth();
+    month = months[monthIndex];
+    year = date.getFullYear();
+    dayOfMonth = date.getDate();
+    
+    reset();
+}
+
+function getYearIndex() {
+    for (var i=0; i<hanukkahDates.length; i++) {
+        var date = hanukkahDates[i];
+        if (date.getFullYear() == year) {
+            return i;
+        }
+    }
+    return 0;    
+}
+
+function advanceYear() {
+    var dateIndex = getYearIndex();
+    
+    dateIndex++;
+    
+    if (dateIndex >= hanukkahDates.length) {
+        dateIndex = 0;
+    }
+        
+    var date = hanukkahDates[dateIndex];
+    year = date.getFullYear();
+    var monthIndex = date.getMonth();
+    month = months[monthIndex];
+    day = 1;
+    dayOfMonth = date.getDate();
+    
     reset();
 }
 
@@ -217,11 +319,17 @@ var locations = [ 870 ];
 var tasks = [];
 
 
-window.onload = doLighting;
+window.onload = doHanukkah;
 //window.onload = foo;
+
+function doHanukkah() {
+    setup();
+    doLighting();
+}
 
 function initialize() {
     setDay();
+    setDate();
 
     if (id > 0) {
         clearInterval(id);
