@@ -21,6 +21,23 @@ var month = "November";
 var dayOfMonth = 12;
 var daysInHanukkah = 8;
 
+function dayMsg() {
+    document.getElementById("clickMsg").style.display = "block";
+}
+
+function removeDayMsg() {
+    document.getElementById("clickMsg").style.display = "none";
+}
+
+function dateMsg() {
+    document.getElementById("clickMsg2").style.display = "block";
+}
+
+function removeDateMsg() {
+    document.getElementById("clickMsg2").style.display = "none";
+}
+
+
 function setup() {
     var date = new Date();
     year = date.getFullYear();

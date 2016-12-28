@@ -30,6 +30,14 @@
 #day:hover { font-size: 1.1em; font-style:italic}
 #currentDate:hover { font-size: 1.1em; font-style:italic}
 
+#clickMsg {position: absolute; top: 300px; left: 200px; z-index: 8; background-color: #253572; color: white; font-size: 1em; font-style:italic; display:none}
+
+#clickMsg:hover { display: block}
+
+#clickMsg2 {position: absolute; top: 300px; left: 200px; z-index: 8; background-color: #253572; color: white; font-size: 1em; font-style:italic; display:none}
+
+#clickMsg2:hover { display: block}
+
 #raise { position:absolute; top: 20px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}
 #lower { position:absolute; top: 70px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}
 #rotate { position:absolute; top: 120px; left: 200px; z-index: 3; width: 60px; height: 30px; background-color: white; border-radius:25%; z-index: 0;}
