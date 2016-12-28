@@ -2,25 +2,46 @@ var fromTop = 132;
 var fromLeft = 708;
 var fromTopInitial = 132;
 var fromLeftInitial = 708;
-var day = 4;
+var day = 5;
 
 var deg = 0;
 var id = -1;
 var timeoutId = -1;
 
-function advanceDay() {
+var year = 2016;
+var month = "December";
+var dayOfMonth = 28;
+
+var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+
+function setDate() {
+    document.getElementById("year").textContent = year;
+    document.getElementById("month").textContent = month;
+    document.getElementById("day-of-month").textContent = dayOfMonth;
+}
+
+function setDay() {
+    document.getElementById("day").textContent = "Day " + day;
+}
+
+function reset() {
     if (timeoutId > 0) {
         clearTimeout(timeoutId);
     }
-    if (day == 8) {
-        newDay = 1;
-    } else {
-        newDay = day + 1;
-    }
-    document.getElementById("day").textContent = "Day " + newDay;
-    day = newDay;
+
     initialize();
     timeoutId = setTimeout(doLighting, 500);
+}
+
+function advanceDay() {
+    
+    if (day == 8) {
+        day = 1;
+    } else {
+        day = day + 1;
+    }
+    reset();
 }
 
 
@@ -200,7 +221,8 @@ window.onload = doLighting;
 //window.onload = foo;
 
 function initialize() {
-    document.getElementById("day").textContent = "Day " + day;
+    setDay();
+
     if (id > 0) {
         clearInterval(id);
     }
