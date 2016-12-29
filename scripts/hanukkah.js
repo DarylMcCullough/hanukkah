@@ -240,17 +240,13 @@ function rotate() {
     
     document.getElementById("wholeCandle").style.transform = 'rotate('+deg+'deg)';
     document.getElementById("flame0").style.transform = 'rotate(-' + deg + 'deg)';
-    document.getElementById("rotate").textContent = deg;
-    
 }
 
 function unrotate() {
     deg--;
     
     document.getElementById("wholeCandle").style.transform = 'rotate('+deg+'deg)';
-    document.getElementById("flame0").style.transform = 'rotate(-' + deg + 'deg)';
-    document.getElementById("rotate").textContent = deg;
-    
+    document.getElementById("flame0").style.transform = 'rotate(-' + deg + 'deg)';    
 }
 
 function goRight(amt) {
