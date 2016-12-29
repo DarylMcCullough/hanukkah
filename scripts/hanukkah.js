@@ -37,7 +37,7 @@ function removeDateMsg() {
 }
 
 
-var factor = 0.5;
+var factor = 0.3;
 
 function makePx(x) {
     var px = Math.floor(x*factor);
@@ -95,6 +95,19 @@ function setupSizes() {
     setSize("candlestick", 11, 60);
 }
 
+function setFontSize(id, em) {
+    var sz = em * factor;
+    var txt = sz + "em";
+    document.getElementById(id).style.fontSize = txt;
+}
+
+
+function setupFontSizes() {
+    setFontSize("currentDate", 1.0);
+    setFontSize("day", 1.0);
+    setFontSize("clickMsg", 1.0);
+    setFontSize("clickMsg2", 1.0);
+}
 
 function setupDates() {
     var date = new Date();
@@ -130,6 +143,7 @@ function setup() {
     setupDates();
     setupPositions();
     setupSizes();
+    setupFontSizes();
 }
 
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
