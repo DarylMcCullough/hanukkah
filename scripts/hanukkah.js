@@ -51,8 +51,15 @@ function makePx(x) {
 
 function setPos(id,x,y) {
     var q = document.getElementById(id);
+    var parent = q.parentElement.nodeName;
+    if (parent == "SECTION") {
+        q.style.left = makePx(y - shiftLeft);
+    } else {
+        q.style.left = makePx(y);
+    }
+
     q.style.top = makePx(x);
-    q.style.left = makePx(y - shiftLeft);
+    
 }
 
 function setSize(id, w, h) {
@@ -150,25 +157,27 @@ function setup() {
 }
 
 function setupFactor() {
-    alert("width: " + window.innerWidth);
     if (window.innerWidth > 1000) {
         factor = 1.0;
         fontFactor = 1.0;
+        shiftLeft = 0;
         return;
     }
     
     if (window.innerWidth > 750) {
         factor = 0.75;
         fontFactor = 1.0;
+        shiftLeft = 0;
         return;
     }
     
     if (window.innerWidth > 500) {
-        factor = 0.75;
+        factor = 0.5
         fontFactor = 0.75;
+        shiftLeft = 0;
         return;
     }
-    
+    shiftLeft = 100;
     factor = 0.4;
     fontFactor = 0.6;
 }
@@ -470,7 +479,6 @@ function initialize() {
 
     
 function doLighting() {
-
     initialize();
     
     var oldJ = 0;
