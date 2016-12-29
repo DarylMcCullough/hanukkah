@@ -10,6 +10,7 @@ var fromLeft = 708;
 var fromTopInitial = 132;
 var fromLeftInitial = 708;
 var day = 1;
+var shiftLeft = 0;
 
 var deg = 0;
 var id = -1;
@@ -36,8 +37,9 @@ function removeDateMsg() {
     document.getElementById("clickMsg2").style.display = "none";
 }
 
-
 var factor = 0.3;
+
+var fontFactor = 0.75;
 
 function makePx(x) {
     var px = Math.floor(x*factor);
@@ -50,7 +52,7 @@ function makePx(x) {
 function setPos(id,x,y) {
     var q = document.getElementById(id);
     q.style.top = makePx(x);
-    q.style.left = makePx(y);
+    q.style.left = makePx(y - shiftLeft);
 }
 
 function setSize(id, w, h) {
@@ -96,7 +98,7 @@ function setupSizes() {
 }
 
 function setFontSize(id, em) {
-    var sz = em * factor;
+    var sz = em * fontFactor;
     var txt = sz + "em";
     document.getElementById(id).style.fontSize = txt;
 }
@@ -140,11 +142,51 @@ function setupDates() {
 }
 
 function setup() {
+    setupFactor();
     setupDates();
     setupPositions();
     setupSizes();
     setupFontSizes();
 }
+
+function setupFactor() {
+    alert("width: " + window.innerWidth);
+    if (window.innerWidth > 1000) {
+        factor = 1.0;
+        fontFactor = 1.0;
+        return;
+    }
+    
+    if (window.innerWidth > 750) {
+        factor = 0.75;
+        fontFactor = 1.0;
+        return;
+    }
+    
+    if (window.innerWidth > 500) {
+        factor = 0.75;
+        fontFactor = 0.75;
+        return;
+    }
+    
+    factor = 0.4;
+    fontFactor = 0.6;
+}
+
+var addEvent = function(object, type, callback) {
+    if (object == null || typeof(object) == 'undefined') return;
+    if (object.addEventListener) {
+        object.addEventListener(type, callback, false);
+    } else if (object.attachEvent) {
+        object.attachEvent("on" + type, callback);
+    } else {
+        object["on"+type] = callback;
+    }
+};
+
+addEvent(window, "resize", function(event) {
+    setup();
+});
 
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
