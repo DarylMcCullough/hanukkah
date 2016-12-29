@@ -37,7 +37,7 @@ function removeDateMsg() {
 }
 
 
-var factor = 0.25;
+var factor = 0.75;
 
 function makePx(x) {
     var px = Math.floor(x*factor);
@@ -246,7 +246,7 @@ function unrotate() {
     deg--;
     
     document.getElementById("wholeCandle").style.transform = 'rotate('+deg+'deg)';
-    document.getElementById("flame0").style.transform = 'rotate(-' + deg + 'deg)';    
+    document.getElementById("flame0").style.transform = 'rotate(-' + deg + 'deg)';
 }
 
 function goRight(amt) {
