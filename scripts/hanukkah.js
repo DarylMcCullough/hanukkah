@@ -5,7 +5,6 @@ Date.prototype.addDays = function(days)
     return dat;
 }
 
-
 var fromTop = 132;
 var fromLeft = 708;
 var fromTopInitial = 132;
@@ -38,7 +37,66 @@ function removeDateMsg() {
 }
 
 
-function setup() {
+var factor = 0.25;
+
+function makePx(x) {
+    var px = Math.floor(x*factor);
+    if (x > 0 && px == 0) {
+        px = 1;
+    }
+    return px + "px";
+}
+
+function setPos(id,x,y) {
+    element = document.getElementById(id);
+    element.style.top = makePx(x);
+    element.style.left = makePx(y);
+}
+
+function setSize(id, w, h) {
+    element = document.getElementById(id);
+    element.style.width = makePx(w);
+    element.style.height = makePx(h);
+}
+
+function setupPositions() {
+    setPos("menorah", 10, 10);
+    setPos("flame1",100, 880);
+    setPos("flame2", 100, 835)
+    setPos("flame3", 100, 788)
+    setPos("flame4",100, 745);
+    setPos("flame5", 100, 658);
+    setPos("flame6", 100, 614);
+    setPos("flame7", 100, 568);
+    setPos("flame8", 100, 524);
+    setPos("wholeCandle", 132, 708);
+    setPos("candlestick", -20, 0);
+    setPos("wick", -30, 4);
+    setPos("flame0", -45, -7);
+    setPos("flameProper", -10, -0);
+    setPos("currentDate", 240, 200);
+    setPos("day", 270, 200);
+    setPos("clickMsg", 300, 200);
+    setPos("clickMsg2", 300, 200);
+}
+
+function setupSizes() {
+    setSize("menorah", 1000, 333);
+    setSize("flameProper", 30, 30);
+    setSize("flame1", 30, 30);
+    setSize("flame2", 30, 30);
+    setSize("flame3", 30, 30);
+    setSize("flame4", 30, 30);
+    setSize("flame5", 30, 30);
+    setSize("flame6", 30, 30);
+    setSize("flame7", 30, 30);
+    setSize("flame8", 30, 30);
+    setSize("wick",3, 10);
+    setSize("candlestick", 11, 60);
+}
+
+
+function setupDates() {
     var date = new Date();
     year = date.getFullYear();
     var yearIndex = getYearIndex();
@@ -68,8 +126,11 @@ function setup() {
     year = date.getFullYear();
 }
 
-year = new Date().getFullYear();
-var i = new Date().getMonth();
+function setup() {
+    setupDates();
+    setupPositions();
+    setupSizes();
+}
 
 var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 
@@ -165,21 +226,13 @@ function advanceYear() {
 
 
 function raise() {
-    fromTop--;
-
-    var txt = fromTop + "px";
-    document.getElementById("wholeCandle").style.top = txt;
-    
-    document.getElementById("raise").textContent = txt;
+    fromTop--;    
+    setPos("wholeCandle", fromTop, fromLeft);
 }
 
 function lower() {
     fromTop++;
-
-    var txt = fromTop + "px";
-    document.getElementById("wholeCandle").style.top = txt;
-    
-    document.getElementById("raise").textContent = txt;
+    setPos("wholeCandle", fromTop, fromLeft);
 }
 
 function rotate() {
@@ -205,9 +258,7 @@ function goRight(amt) {
         amt = 1;
     }
     fromLeft += amt;
-    var txt = fromLeft + "px";
-    document.getElementById("wholeCandle").style.left = txt;   
-    
+    setPos("wholeCandle", fromTop, fromLeft);    
 }
 
 function goLeft(amt) {
@@ -215,9 +266,7 @@ function goLeft(amt) {
         amt = 1;
     }
     fromLeft -= amt;
-    var txt = fromLeft + "px";
-    document.getElementById("wholeCandle").style.left = txt;   
-    
+    setPos("wholeCandle", fromTop, fromLeft);    
 }
 
 function Initial() {
@@ -352,15 +401,10 @@ function initialize() {
         clearInterval(id);
     }
     
-    var element = document.getElementById("wholeCandle");
-    
-    element.style.left = fromLeftInitial + "px";
-
     fromLeft = fromLeftInitial;
-    element.style.top = fromTopInitial;
     fromTop = fromTopInitial;
     
-    element.style.top = fromTop + "px";
+    setPos("wholeCandle", fromTop, fromLeft);
     
     for (var i = 0; i< flames.length; i++) {
         flames[i].style.zIndex = -1;
