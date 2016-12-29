@@ -37,7 +37,7 @@ function removeDateMsg() {
 }
 
 
-var factor = 0.75;
+var factor = 0.5;
 
 function makePx(x) {
     var px = Math.floor(x*factor);
@@ -48,15 +48,15 @@ function makePx(x) {
 }
 
 function setPos(id,x,y) {
-    element = document.getElementById(id);
-    element.style.top = makePx(x);
-    element.style.left = makePx(y);
+    var q = document.getElementById(id);
+    q.style.top = makePx(x);
+    q.style.left = makePx(y);
 }
 
 function setSize(id, w, h) {
-    element = document.getElementById(id);
-    element.style.width = makePx(w);
-    element.style.height = makePx(h);
+    var p = document.getElementById(id);
+    p.style.width = makePx(w);
+    p.style.height = makePx(h);
 }
 
 function setupPositions() {
@@ -272,7 +272,6 @@ function Initial() {
     this.maxIndex = 121;
     this.maxHeight = 60;
     this.doit = function() {
-        //document.getElementById("clickMsg").style.zindex = -1;
         this.index++;
         rotate();
         if (this.index > this.maxIndex) {
@@ -342,7 +341,6 @@ function Final() {
         this.index++;
         unrotate();
         if (this.index > this.maxIndex) {
-            //document.getElementById("clickMsg").style.zindex = -1;
             return false;
         }
         var newJ = Math.floor(1.0 * this.index * this.maxHeight/this.maxIndex);
@@ -411,7 +409,6 @@ function initialize() {
         unrotate();
     }
 
-    element.zindex = 3;
     tasks = [];
 }
 
