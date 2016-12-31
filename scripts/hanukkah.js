@@ -395,6 +395,11 @@ function rotate() {
     
     document.getElementById("wholeCandle").style.transform = 'rotate('+deg+'deg)';
     document.getElementById("flame0").style.transform = 'rotate(-' + deg + 'deg)';
+    if (deg > 90) {
+        document.getElementById("wick").style.backgroundColor = "rgba(255,255,255,0.1)";
+    } else {
+        document.getElementById("wick").style.backgroundColor = "black";
+    }
 }
 
 function unrotate() {
@@ -402,6 +407,11 @@ function unrotate() {
     
     document.getElementById("wholeCandle").style.transform = 'rotate('+deg+'deg)';
     document.getElementById("flame0").style.transform = 'rotate(-' + deg + 'deg)';
+    if (deg > 90) {
+        document.getElementById("wick").style.backgroundColor = "rgba(255,255,255,0.1)";
+    } else {
+        document.getElementById("wick").style.backgroundColor = "black";
+    }
 }
 
 function goRight(amt) {

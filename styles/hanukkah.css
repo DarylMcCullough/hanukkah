@@ -16,8 +16,8 @@
 #wholeCandle { position:absolute; top: 132px; left: 708px; z-index: 3; width: 3px; height: 10px;}
 
 #candlestick { position:absolute; top: -20px; z-index: 3; width: 11px; height: 60px; background-color: white}
-#wick { position:absolute; top:-30px; left:4px; z-index: 3; width: 3px; height: 10px; background-color: black}
-#flame0 { position:absolute; top:-45px; left:-7px; }
+#wick { position:absolute; top:-30px; left:4px; z-index: 2; width: 3px; height: 10px; background-color: black}
+#flame0 { position:absolute; top:-45px; left:-7px; z-index:5}
 #flameProper { position:relative; top:-10px; left:-0x; z-index: 5;}
 
 #overMsg {position: absolute; top: 210px; left: 200px; z-index: -2; background-color: #253572; color: white; font-size: 1em}
