@@ -20,6 +20,8 @@
 #flame0 { position:absolute; top:-45px; left:-7px; }
 #flameProper { position:relative; top:-10px; left:-0x; z-index: 5;}
 
+#overMsg {position: absolute; top: 210px; left: 200px; z-index: -2; background-color: #253572; color: white; font-size: 1em}
+
 #currentDate {position: absolute; top: 240px; left: 200px; z-index: 8; background-color: #253572; color: white; font-size: 1em}
 
 

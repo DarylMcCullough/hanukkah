@@ -20,6 +20,17 @@ var year = 2015;
 var month = "November";
 var dayOfMonth = 12;
 var daysInHanukkah = 8;
+var animationOn = true;
+var date = new Date();
+var nextHanukkah = new Date();
+
+function formatDate(date) {
+    var monthIndex = date.getMonth();
+    var month = months[monthIndex];
+    var day = date.getDate();
+    var year = date.getFullYear();
+    return month + day + ", " + year;
+}
 
 function dayMsg() {
     document.getElementById("clickMsg").style.display = "block";
@@ -64,7 +75,16 @@ function setPos(id,x,y) {
 
 function setSize(id, w, h) {
     var p = document.getElementById(id);
-    p.style.width = makePx(w);
+    if (w == undefined || w == null) {
+        p.style.width = "auto";
+    } else {
+        p.style.width = makePx(w);
+    }
+    if (h == undefined || h == null) {
+        p.style.height = "auto";
+    } else {
+        p.style.height = makePx(h);
+    }
     p.style.height = makePx(h);
 }
 
@@ -87,6 +107,49 @@ function setupPositions() {
     setPos("day", 270, 200);
     setPos("clickMsg", 300, 200);
     setPos("clickMsg2", 300, 200);
+    setPos("overMsg", 20, 270);
+}
+
+function makeOpaque(id) {
+    document.getElementById(id).style.opacity = "1.0";
+}
+
+function makeTransparent(id) {
+    document.getElementById(id).style.opacity = "0.5";
+}
+
+function makeBackgroundOpaque() {
+    makeOpaque("menorah");
+    makeOpaque("flame1");
+    makeOpaque("flame2");
+    makeOpaque("flame3");
+    makeOpaque("flame4");
+    makeOpaque("flame5");
+    makeOpaque("flame6");
+    makeOpaque("flame7");
+    makeOpaque("flame8");
+    makeOpaque("wholeCandle");
+    makeOpaque("candlestick");
+    makeOpaque("wick");
+    makeOpaque("flame0");
+    makeOpaque("flameProper");
+}
+
+function makeBackgroundTransparent() {
+    makeTransparent("menorah");
+    makeTransparent("flame1");
+    makeTransparent("flame2");
+    makeTransparent("flame3");
+    makeTransparent("flame4");
+    makeTransparent("flame5");
+    makeTransparent("flame6");
+    makeTransparent("flame7");
+    makeTransparent("flame8");
+    makeTransparent("wholeCandle");
+    makeTransparent("candlestick");
+    makeTransparent("wick");
+    makeTransparent("flame0");
+    makeTransparent("flameProper");
 }
 
 function setupSizes() {
@@ -102,6 +165,7 @@ function setupSizes() {
     setSize("flame8", 30, 30);
     setSize("wick",3, 10);
     setSize("candlestick", 11, 60);
+    setSize("overMsg", 650);
 }
 
 function setFontSize(id, em) {
@@ -116,16 +180,21 @@ function setupFontSizes() {
     setFontSize("day", 1.0);
     setFontSize("clickMsg", 1.0);
     setFontSize("clickMsg2", 1.0);
+    setFontSize("overMsg", 1.5);
+
 }
 
 function setupDates() {
-    var date = new Date();
+    date = new Date();
+    //date = makeDate(1, "January", 2017),
     year = date.getFullYear();
     var yearIndex = getYearIndex();
     var startHanukkah = hanukkahDates[yearIndex];
     day = 1;
+    var date1 = startHanukkah;
+    var found = false;
     for (var i=1; i<=daysInHanukkah; i++) {
-        var date1 = startHanukkah.addDays(i-1);
+        date1 = startHanukkah.addDays(i-1);
                 
         if (date1.getMonth() != date.getMonth()) {
             continue;
@@ -136,11 +205,24 @@ function setupDates() {
         if (date1.getDate() != date.getDate()) {
             continue;
         }
+        found = true;
         day = i;
         break;
     }
-    if (day == 1) {
-        date = startHanukkah;
+    if (! found) {
+        animationOn = false; 
+        if (date > startHanukkah) {
+            yearIndex++;
+            if (yearIndex >= hanukkahDates.length) {
+                alert("Whoops! I don't know when the next Hanukkah will be. Let's revisit a past Hanukkah.");
+                nextHanukkah = hanukkahDates[0];
+            } else {
+                nextHanukkah = hanukkahDates[yearIndex];
+            }
+        } else {
+            nextHanukkah = startHanukkah;
+        }
+        day = 1;
     }
     var mnth = date.getMonth();
     month = months[mnth];
@@ -232,6 +314,7 @@ function setDay() {
 }
 
 function reset() {
+    animationOn = true;
     if (timeoutId > 0) {
         clearTimeout(timeoutId);
     }
@@ -241,15 +324,19 @@ function reset() {
 }
 
 function advanceDay() {
-    
-    if (day == 8) {
-        day = 1;
-    } else {
-        day = day + 1;
+    if (animationOn) {
+        
+        if (day == 8) {
+            day = 1;
+        } else {
+            day = day + 1;
+        }
     }
-    
+    else {
+        animationOn = true;
+    }
     var dateIndex = getYearIndex();
-    var date = hanukkahDates[dateIndex];
+    date = hanukkahDates[dateIndex];
     date = date.addDays(day-1);
 
     var monthIndex = date.getMonth();
@@ -272,14 +359,17 @@ function getYearIndex() {
 
 function advanceYear() {
     var dateIndex = getYearIndex();
-    
-    dateIndex++;
-    
+    if (animationOn) {
+        dateIndex++;
+    }
+    else {
+        animationOn = true;
+    }
     if (dateIndex >= hanukkahDates.length) {
         dateIndex = 0;
     }
         
-    var date = hanukkahDates[dateIndex];
+    date = hanukkahDates[dateIndex];
     year = date.getFullYear();
     var monthIndex = date.getMonth();
     month = months[monthIndex];
@@ -449,10 +539,28 @@ window.onload = doHanukkah;
 
 function doHanukkah() {
     setup();
-    doLighting();
+    if (!animationOn) {
+        document.getElementById("overMsg").style.zIndex = 2;
+        document.getElementById("nextHanukkah").textContent = formatDate(nextHanukkah);
+        document.getElementById("overMsg").style.backgroundColor = "rgba(37, 53, 114, 0.8)";
+        document.getElementById("overMsg").style.border = "thick solid rgba(187, 199, 238, 0.8)";
+        document.getElementById("overMsg").style.padding = "10px";
+        setDay();
+        setDate();
+        //makeBackgroundTransparent();
+        document.getElementById("menorah").src = "assets/menorah-lit.png";
+        document.getElementById("wholeCandle").style.zIndex = -2;
+        
+    } else {
+        doLighting();
+    }
 }
 
 function initialize() {
+    var element = document.getElementById("overMsg");
+    element.style.zIndex = -2;
+    document.getElementById("menorah").src = "assets/menorah.png";
+     document.getElementById("wholeCandle").style.zIndex = 3;
     setDay();
     setDate();
 
