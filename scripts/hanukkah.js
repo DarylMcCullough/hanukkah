@@ -29,7 +29,7 @@ function formatDate(date) {
     var month = months[monthIndex];
     var day = date.getDate();
     var year = date.getFullYear();
-    return month + day + ", " + year;
+    return month + " " + day + ", " + year;
 }
 
 function dayMsg() {
@@ -181,12 +181,13 @@ function setupFontSizes() {
     setFontSize("clickMsg", 1.0);
     setFontSize("clickMsg2", 1.0);
     setFontSize("overMsg", 1.5);
+    setFontSize("explain", 0.9);
 
 }
 
 function setupDates() {
-    date = new Date();
-    //date = makeDate(1, "January", 2017),
+    //date = new Date();
+    date = makeDate(1, "January", 2017),
     year = date.getFullYear();
     var yearIndex = getYearIndex();
     var startHanukkah = hanukkahDates[yearIndex];
@@ -550,11 +551,12 @@ window.onload = doHanukkah;
 function doHanukkah() {
     setup();
     if (!animationOn) {
-        document.getElementById("overMsg").style.zIndex = 2;
+        document.getElementById("overMsg").style.zIndex = 3;
+        document.getElementById("overMsg").style.display = "block";
         document.getElementById("nextHanukkah").textContent = formatDate(nextHanukkah);
         document.getElementById("overMsg").style.backgroundColor = "rgba(37, 53, 114, 0.8)";
         document.getElementById("overMsg").style.border = "thick solid rgba(187, 199, 238, 0.8)";
-        document.getElementById("overMsg").style.padding = "10px";
+        document.getElementById("overMsg").style.padding = "4px";
         setDay();
         setDate();
         //makeBackgroundTransparent();
