@@ -23,6 +23,24 @@ var daysInHanukkah = 8;
 var animationOn = true;
 var date = new Date();
 var nextHanukkah = new Date();
+var entered = 0;
+
+function credits() {
+    entered++;
+    document.getElementById("blame1").style.display = "block";
+}
+
+function removeCredits() {
+    entered--;
+    timeoutId = setTimeout(rem, 500);
+    
+    function rem() {
+        if (entered <= 0) {
+            document.getElementById("blame1").style.display = "none";
+        }
+    }
+
+}
 
 function formatDate(date) {
     var monthIndex = date.getMonth();
@@ -108,6 +126,8 @@ function setupPositions() {
     setPos("clickMsg", 300, 200);
     setPos("clickMsg2", 300, 200);
     setPos("overMsg", 20, 270);
+    setPos("credits", 300, 780);
+    setPos("blame1", 100, 400);
 }
 
 function makeOpaque(id) {
@@ -166,6 +186,7 @@ function setupSizes() {
     setSize("wick",3, 10);
     setSize("candlestick", 11, 60);
     setSize("overMsg", 650);
+    setSize("blame1", 500);
 }
 
 function setFontSize(id, em) {
@@ -182,7 +203,9 @@ function setupFontSizes() {
     setFontSize("clickMsg2", 1.0);
     setFontSize("overMsg", 1.5);
     setFontSize("explain", 0.9);
-
+    setFontSize("credits", 0.8);
+    setFontSize("blame1", 1.0);
+    setFontSize("url", 0.7);
 }
 
 function setupDates() {
