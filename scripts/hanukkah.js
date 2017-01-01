@@ -128,6 +128,8 @@ function setupPositions() {
     setPos("overMsg", 20, 270);
     setPos("credits", 300, 780);
     setPos("blame1", 100, 400);
+    setPos("loading", 100, 400);
+
 }
 
 function makeOpaque(id) {
@@ -187,6 +189,8 @@ function setupSizes() {
     setSize("candlestick", 11, 60);
     setSize("overMsg", 650);
     setSize("blame1", 500);
+    setSize("loading", 500);
+
 }
 
 function setFontSize(id, em) {
@@ -206,6 +210,7 @@ function setupFontSizes() {
     setFontSize("credits", 0.8);
     setFontSize("blame1", 1.0);
     setFontSize("url", 0.7);
+    setFontSize("loading", 8.0);
 }
 
 function setupDates() {
@@ -573,6 +578,7 @@ window.onload = doHanukkah;
 
 function doHanukkah() {
     setup();
+    document.getElementById("loading").style.display = "none";
     if (!animationOn) {
         document.getElementById("overMsg").style.zIndex = 3;
         document.getElementById("overMsg").style.display = "block";
