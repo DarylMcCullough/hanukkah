@@ -186,8 +186,8 @@ function setupFontSizes() {
 }
 
 function setupDates() {
-    //date = new Date();
-    date = makeDate(1, "January", 2017),
+    date = new Date();
+    //date = makeDate(1, "January", 2017),
     year = date.getFullYear();
     var yearIndex = getYearIndex();
     var startHanukkah = hanukkahDates[yearIndex];
