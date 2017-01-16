@@ -210,7 +210,7 @@ function setupFontSizes() {
     setFontSize("credits", 0.8);
     setFontSize("blame1", 1.0);
     setFontSize("url", 0.7);
-    setFontSize("loading", 8.0);
+    setFontSize("loading", 4.0);
 }
 
 function setupDates() {
